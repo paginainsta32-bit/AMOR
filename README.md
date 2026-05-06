@@ -1,0 +1,2 @@
+# AMOR
+AMORQRCODE
