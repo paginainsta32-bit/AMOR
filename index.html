@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa História - Phelipe & Vanessa</title>
+    <style>
+        :root {
+            --primary: #ff0050;
+            --bg: #000000;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- SEÇÃO 1: TRAILER --- */
+        .intro-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .phone-frame {
+            position: relative;
+            width: 300px;
+            height: 580px;
+            border: 10px solid #1a1a1a;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(255, 0, 80, 0.3);
+            background: #111;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .slide.active { opacity: 1; }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: zoomEffect 12s infinite alternate;
+        }
+
+        @keyframes zoomEffect {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+
+        .overlay-text {
+            position: absolute;
+            bottom: 50px;
+            width: 100%;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 15px rgba(0,0,0,1);
+            z-index: 10;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- SEÇÃO 2: CONTADOR --- */
+        .counter-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, #000, #1a0005);
+        }
+
+        .grid-timer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .box {
+            background: rgba(255, 0, 80, 0.1);
+            border: 1px solid var(--primary);
+            padding: 20px;
+            border-radius: 20px;
+            min-width: 100px;
+            backdrop-filter: blur(5px);
+        }
+
+        .box span {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* --- BOTÕES E ELEMENTOS --- */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--primary);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .heart {
+            position: fixed;
+            color: var(--primary);
+            pointer-events: none;
+            z-index: 0;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .scroll-down {
+            margin-top: 20px;
+            opacity: 0.5;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
+    </style>
+</head>
+<body>
+
+<button class="music-control" onclick="toggleMusic()">🎵</button>
+
+<!-- TRAILER -->
+<section class="intro-section">
+    <div class="phone-frame">
+        <!-- FOTOS: Altere o nome para as fotos que você colocar na pasta /img -->
+        <div class="slide active"><img src="img/01.jpg"></div>
+        <div class="slide"><img src="img/02.jpg"></div>
+        <div class="slide"><img src="img/03.jpg"></div>
+        <div class="slide"><img src="img/04.jpg"></div>
+        <div class="slide"><img src="img/05.jpg"></div>
+        
+        <div id="slide-text" class="overlay-text">Phelipe & Vanessa</div>
+    </div>
+    <div class="scroll-down">Role para ver nosso tempo ↓</div>
+</section>
+
+<!-- CONTADOR -->
+<section class="counter-section">
+    <h2 style="font-size: 2.5rem;">Tempo de Muito Amor</h2>
+    <div class="grid-timer">
+        <div class="box"><span id="d">0</span><label>Dias</label></div>
+        <div class="box"><span id="h">0</span><label>Horas</label></div>
+        <div class="box"><span id="m">0</span><label>Minutos</label></div>
+        <div class="box"><span id="s">0</span><label>Segundos</label></div>
+    </div>
+    <div style="margin-top: 50px; font-style: italic; opacity: 0.8;">
+        "Desde 12 de Junho de 2022, cada segundo vale a pena."
+    </div>
+    <div style="font-size: 4rem; margin-top: 30px;">💍 ♾️ ❤️</div>
+</section>
+
+<!-- ÁUDIO LOCAL -->
+<audio id="player" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    // 1. DATA DE INÍCIO (Junho é mês 5 no JS)
+    const startDate = new Date(2022, 5, 12, 0, 0, 0);
+
+    // 2. LÓGICA DO CONTADOR
+    function updateCounter() {
+        const now = new Date();
+        const diff = now - startDate;
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const mins = Math.floor((diff / (1000 * 60)) % 60);
+        const secs = Math.floor((diff / 1000) % 60);
+
+        document.getElementById('d').innerText = days;
+        document.getElementById('h').innerText = hours;
+        document.getElementById('m').innerText = mins;
+        document.getElementById('s').innerText = secs;
+    }
+    setInterval(updateCounter, 1000);
+    updateCounter();
+
+    // 3. LÓGICA DOS SLIDES
+    let current = 0;
+    const slides = document.querySelectorAll('.slide');
+    const texts = [
+        "Tudo começou em 2022...",
+        "O melhor presente da vida",
+        "Cada momento com você...",
+        "É um sonho realizado",
+        "Phelipe & Vanessa ❤️"
+    ];
+    const textElement = document.getElementById('slide-text');
+
+    function nextSlide() {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+
+        textElement.style.opacity = 0;
+        setTimeout(() => {
+            textElement.innerText = texts[current] || "Amo você";
+            textElement.style.opacity = 1;
+        }, 600);
+    }
+    setInterval(nextSlide, 4500);
+
+    // 4. MÚSICA E CORAÇÕES
+    const player = document.getElementById('player');
+    function toggleMusic() {
+        player.paused ? player.play() : player.pause();
+    }
+
+    function createHeart() {
+        const h = document.createElement('div');
+        h.className = 'heart';
+        h.innerHTML = '❤';
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.top = '-20px';
+        h.style.fontSize = Math.random() * 20 + 15 + 'px';
+        h.style.animationDuration = Math.random() * 3 + 3 + 's';
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 6000);
+    }
+    setInterval(createHeart, 350);
+
+    // Auto-play no primeiro clique
+    document.addEventListener('click', () => {
+        if(player.paused) player.play();
+    }, { once: true });
+</script>
+
+</body>
+</html>
