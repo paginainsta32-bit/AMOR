@@ -1,156 +1,414 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nossa História - Phelipe & Vanessa</title>
-    <style>
-        :root {
-            --primary: #ff0050;
-            --bg: #000000;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nossa História - Phelipe & Vanessa</title>
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: var(--bg);
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
+<style>
+:root{
+    --primary:#ff0050;
+    --bg:#000;
+    --soft:#1a0008;
+}
 
-        /* --- SEÇÃO 1: TRAILER --- */
-        .intro-section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .phone-frame {
-            position: relative;
-            width: 300px;
-            height: 580px;
-            border: 10px solid #1a1a1a;
-            border-radius: 40px;
-            overflow: hidden;
-            box-shadow: 0 0 60px rgba(255, 0, 80, 0.3);
-            background: #111;
-        }
+body{
+    background:var(--bg);
+    color:white;
+    font-family:'Segoe UI',sans-serif;
+    overflow-x:hidden;
+    scroll-behavior:smooth;
+}
 
-        .slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-        }
+/* FUNDO */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at top, rgba(255,0,80,0.18), transparent 40%);
+    z-index:-2;
+}
 
-        .slide.active { opacity: 1; }
+/* PARTICULAS */
+.stars{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    overflow:hidden;
+}
 
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            animation: zoomEffect 12s infinite alternate;
-        }
+.star{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:white;
+    border-radius:50%;
+    opacity:.7;
+    animation: twinkle 4s infinite;
+}
 
-        @keyframes zoomEffect {
-            from { transform: scale(1); }
-            to { transform: scale(1.2); }
-        }
+@keyframes twinkle{
+    0%,100%{opacity:.2;}
+    50%{opacity:1;}
+}
 
-        .overlay-text {
-            position: absolute;
-            bottom: 50px;
-            width: 100%;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 15px rgba(0,0,0,1);
-            z-index: 10;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
+/* BOTAO MUSICA */
+.music-control{
+    position:fixed;
+    top:20px;
+    right:20px;
+    z-index:1000;
+    width:60px;
+    height:60px;
+    border:none;
+    border-radius:50%;
+    background:linear-gradient(135deg,#ff0050,#ff4d88);
+    color:white;
+    font-size:1.2rem;
+    cursor:pointer;
+    box-shadow:0 0 30px rgba(255,0,80,.7);
+    transition:.3s;
+}
 
-        /* --- SEÇÃO 2: CONTADOR --- */
-        .counter-section {
-            padding: 80px 20px;
-            text-align: center;
-            background: linear-gradient(to bottom, #000, #1a0005);
-        }
+.music-control:hover{
+    transform:scale(1.1);
+}
 
-        .grid-timer {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 40px;
-        }
+/* INTRO */
+.intro-section{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:40px 20px;
+}
 
-        .box {
-            background: rgba(255, 0, 80, 0.1);
-            border: 1px solid var(--primary);
-            padding: 20px;
-            border-radius: 20px;
-            min-width: 100px;
-            backdrop-filter: blur(5px);
-        }
+.main-title{
+    font-size:3rem;
+    text-align:center;
+    margin-bottom:30px;
+    background:linear-gradient(to right,#ff0050,#ff9ec0);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-shadow:0 0 20px rgba(255,0,80,.5);
+}
 
-        .box span {
-            display: block;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
+.phone-frame{
+    position:relative;
+    width:320px;
+    height:600px;
+    border:10px solid #222;
+    border-radius:40px;
+    overflow:hidden;
+    background:#111;
+    box-shadow:
+    0 0 70px rgba(255,0,80,.4),
+    inset 0 0 20px rgba(255,255,255,.05);
+}
 
-        /* --- BOTÕES E ELEMENTOS --- */
-        .music-control {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: var(--primary);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 0 20px var(--primary);
-        }
+.slide{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    transition:opacity 1.5s ease-in-out;
+}
 
-        .heart {
-            position: fixed;
-            color: var(--primary);
-            pointer-events: none;
-            z-index: 0;
-            animation: fall linear forwards;
-        }
+.slide.active{
+    opacity:1;
+}
 
-        @keyframes fall {
-            to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-        }
+.slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    animation:zoomEffect 10s infinite alternate;
+}
 
-        .scroll-down {
-            margin-top: 20px;
-            opacity: 0.5;
-            animation: bounce 2s infinite;
-        }
+@keyframes zoomEffect{
+    from{transform:scale(1);}
+    to{transform:scale(1.15);}
+}
 
-        @keyframes bounce { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
-    </style>
+.overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,.8), transparent 50%);
+}
+
+.overlay-text{
+    position:absolute;
+    bottom:50px;
+    left:50%;
+    transform:translateX(-50%);
+    width:90%;
+    text-align:center;
+    font-size:1.6rem;
+    font-weight:bold;
+    text-shadow:0 0 20px black;
+    z-index:5;
+    transition:.5s;
+}
+
+.scroll-down{
+    margin-top:25px;
+    opacity:.7;
+    animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+}
+
+/* CONTADOR */
+.counter-section{
+    padding:100px 20px;
+    background:linear-gradient(to bottom,#000,#120006);
+    text-align:center;
+}
+
+.counter-section h2{
+    font-size:2.8rem;
+    margin-bottom:50px;
+}
+
+.grid-timer{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.box{
+    min-width:120px;
+    padding:25px;
+    border-radius:25px;
+    border:1px solid rgba(255,0,80,.5);
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(10px);
+    transition:.3s;
+}
+
+.box:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 25px rgba(255,0,80,.4);
+}
+
+.box span{
+    display:block;
+    font-size:3rem;
+    color:var(--primary);
+    font-weight:bold;
+}
+
+/* TEXTOS ROMANTICOS */
+.love-texts{
+    padding:100px 25px;
+    background:#090909;
+}
+
+.love-title{
+    text-align:center;
+    font-size:2.7rem;
+    margin-bottom:60px;
+}
+
+.text-card{
+    max-width:900px;
+    margin:30px auto;
+    padding:35px;
+    border-radius:25px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,0,80,.2);
+    line-height:1.8;
+    font-size:1.15rem;
+    box-shadow:0 0 30px rgba(255,0,80,.08);
+}
+
+/* GALERIA */
+.gallery{
+    padding:100px 20px;
+    background:linear-gradient(to bottom,#090909,#160008);
+}
+
+.gallery h2{
+    text-align:center;
+    font-size:2.7rem;
+    margin-bottom:60px;
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.gallery-item{
+    position:relative;
+    overflow:hidden;
+    border-radius:25px;
+    height:320px;
+    cursor:pointer;
+    box-shadow:0 0 20px rgba(255,0,80,.2);
+}
+
+.gallery-item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:1s;
+}
+
+.gallery-item:hover img{
+    transform:scale(1.1);
+}
+
+/* CORAÇÕES */
+.heart{
+    position:fixed;
+    color:var(--primary);
+    pointer-events:none;
+    z-index:0;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+/* CORAÇÃO ESTOURAVEL */
+.pop-section{
+    padding:120px 20px;
+    text-align:center;
+    background:#000;
+}
+
+.pop-section h2{
+    font-size:2.8rem;
+    margin-bottom:15px;
+}
+
+.pop-heart{
+    width:160px;
+    height:160px;
+    background:var(--primary);
+    margin:50px auto;
+    transform:rotate(-45deg);
+    position:relative;
+    cursor:pointer;
+    animation:pulse 1.5s infinite;
+    box-shadow:0 0 50px rgba(255,0,80,.6);
+}
+
+.pop-heart::before,
+.pop-heart::after{
+    content:"";
+    width:160px;
+    height:160px;
+    background:var(--primary);
+    border-radius:50%;
+    position:absolute;
+}
+
+.pop-heart::before{
+    top:-80px;
+    left:0;
+}
+
+.pop-heart::after{
+    left:80px;
+    top:0;
+}
+
+@keyframes pulse{
+    0%,100%{transform:rotate(-45deg) scale(1);}
+    50%{transform:rotate(-45deg) scale(1.08);}
+}
+
+#phrase{
+    max-width:700px;
+    margin:30px auto 0;
+    font-size:1.4rem;
+    line-height:1.7;
+    min-height:80px;
+    color:#ffd2df;
+    transition:.5s;
+}
+
+/* FINAL */
+.final{
+    padding:120px 20px;
+    text-align:center;
+    background:linear-gradient(to top,#000,#1a0008);
+}
+
+.final h2{
+    font-size:3rem;
+    margin-bottom:30px;
+}
+
+.final p{
+    max-width:800px;
+    margin:auto;
+    line-height:1.9;
+    font-size:1.2rem;
+    opacity:.9;
+}
+
+@media(max-width:768px){
+
+    .main-title{
+        font-size:2.2rem;
+    }
+
+    .phone-frame{
+        width:90%;
+        max-width:320px;
+        height:560px;
+    }
+
+    .overlay-text{
+        font-size:1.3rem;
+    }
+
+    .counter-section h2,
+    .love-title,
+    .gallery h2,
+    .pop-section h2,
+    .final h2{
+        font-size:2rem;
+    }
+
+}
+</style>
 </head>
+
 <body>
+
+<div class="stars"></div>
 
 <button class="music-control" onclick="toggleMusic()">🎵</button>
 
-<!-- TRAILER -->
+<!-- INTRO -->
 <section class="intro-section">
+
+    <h1 class="main-title">
+        Phelipe ❤️ Vanessa
+    </h1>
+
     <div class="phone-frame">
-        <!-- FOTOS: Altere o nome para as fotos que você colocar na pasta /img -->
+
         <div class="slide active"><img src="img/01.jpg"></div>
         <div class="slide"><img src="img/02.jpg"></div>
         <div class="slide"><img src="img/03.jpg"></div>
@@ -159,6 +417,7 @@
         <div class="slide"><img src="img/06.jpg"></div>
         <div class="slide"><img src="img/07.jpg"></div>
         <div class="slide"><img src="img/08.jpg"></div>
+        <div class="slide"><img src="img/09.jpg"></div>
         <div class="slide"><img src="img/10.jpg"></div>
         <div class="slide"><img src="img/11.jpg"></div>
         <div class="slide"><img src="img/12.jpg"></div>
@@ -168,103 +427,333 @@
         <div class="slide"><img src="img/16.jpg"></div>
         <div class="slide"><img src="img/17.jpg"></div>
         <div class="slide"><img src="img/18.jpg"></div>
-       
-       
-        <div id="slide-text" class="overlay-text">Phelipe & Vanessa</div>
+
+        <div class="overlay"></div>
+
+        <div id="slide-text" class="overlay-text">
+            Nosso amor é infinito ❤️
+        </div>
+
     </div>
-    <div class="scroll-down">Role para ver nosso tempo ↓</div>
+
+    <div class="scroll-down">
+        Role para continuar ↓
+    </div>
+
 </section>
 
 <!-- CONTADOR -->
 <section class="counter-section">
-    <h2 style="font-size: 2.5rem;">Tempo de Muito Amor</h2>
+
+    <h2>Tempo do Nosso Amor ⏳</h2>
+
     <div class="grid-timer">
-        <div class="box"><span id="d">0</span><label>Dias</label></div>
-        <div class="box"><span id="h">0</span><label>Horas</label></div>
-        <div class="box"><span id="m">0</span><label>Minutos</label></div>
-        <div class="box"><span id="s">0</span><label>Segundos</label></div>
+
+        <div class="box">
+            <span id="d">0</span>
+            Dias
+        </div>
+
+        <div class="box">
+            <span id="h">0</span>
+            Horas
+        </div>
+
+        <div class="box">
+            <span id="m">0</span>
+            Minutos
+        </div>
+
+        <div class="box">
+            <span id="s">0</span>
+            Segundos
+        </div>
+
     </div>
-    <div style="margin-top: 50px; font-style: italic; opacity: 0.8;">
-        "Desde 12 de Junho de 2023, cada segundo vale a pena."
+
+    <div style="margin-top:50px;font-size:1.2rem;opacity:.8;">
+        Desde 12 de Junho de 2023, cada segundo ao seu lado vale a pena ❤️
     </div>
-    <div style="font-size: 4rem; margin-top: 30px;">💍 ♾️ ❤️</div>
+
 </section>
 
-<!-- ÁUDIO LOCAL -->
+<!-- TEXTOS -->
+<section class="love-texts">
+
+    <h2 class="love-title">
+        Algumas Coisas Que Eu Sinto Por Você
+    </h2>
+
+    <div class="text-card">
+        Você chegou na minha vida de uma forma inesperada e transformou tudo em algo mais bonito. Cada conversa, cada abraço e cada sorriso seu virou o meu lugar favorito no mundo.
+    </div>
+
+    <div class="text-card">
+        O amor que eu sinto por você não cabe em palavras. É algo que cresce todos os dias, em cada detalhe, em cada momento simples que se torna especial só porque estou ao seu lado.
+    </div>
+
+    <div class="text-card">
+        Você é a minha paz, meu porto seguro e também a melhor aventura da minha vida. Se eu pudesse escolher mil vezes, ainda escolheria você em todas elas.
+    </div>
+
+    <div class="text-card">
+        Não importa quanto tempo passe, eu sempre vou olhar para você com o mesmo brilho nos olhos de quando tudo começou.
+    </div>
+
+</section>
+
+<!-- GALERIA -->
+<section class="gallery">
+
+    <h2>Nossos Momentos 📸</h2>
+
+    <div class="gallery-grid">
+
+        <div class="gallery-item"><img src="img/01.jpg"></div>
+        <div class="gallery-item"><img src="img/02.jpg"></div>
+        <div class="gallery-item"><img src="img/03.jpg"></div>
+        <div class="gallery-item"><img src="img/04.jpg"></div>
+        <div class="gallery-item"><img src="img/05.jpg"></div>
+        <div class="gallery-item"><img src="img/06.jpg"></div>
+        <div class="gallery-item"><img src="img/07.jpg"></div>
+        <div class="gallery-item"><img src="img/08.jpg"></div>
+        <div class="gallery-item"><img src="img/09.jpg"></div>
+        <div class="gallery-item"><img src="img/10.jpg"></div>
+        <div class="gallery-item"><img src="img/11.jpg"></div>
+        <div class="gallery-item"><img src="img/12.jpg"></div>
+
+    </div>
+
+</section>
+
+<!-- CORAÇÃO -->
+<section class="pop-section">
+
+    <h2>Estoure o Coração ❤️</h2>
+
+    <p>Cada clique revela uma mensagem apaixonante...</p>
+
+    <div class="pop-heart" onclick="showPhrase()"></div>
+
+    <div id="phrase">
+        Clique no coração ✨
+    </div>
+
+</section>
+
+<!-- FINAL -->
+<section class="final">
+
+    <h2>Eu Amo Você ❤️</h2>
+
+    <p>
+        Obrigado por existir, por me fazer sorrir, por ser meu amor, minha parceira e minha pessoa favorita no mundo inteiro.
+        Quero continuar escrevendo nossa história por muitos e muitos anos.
+    </p>
+
+</section>
+
+<!-- AUDIO -->
 <audio id="player" loop>
     <source src="musica.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-    // 1. DATA DE INÍCIO (Junho é mês 5 no JS)
-    const startDate = new Date(2023, 5, 12, 0, 0, 0);
 
-    // 2. LÓGICA DO CONTADOR
-    function updateCounter() {
-        const now = new Date();
-        const diff = now - startDate;
+/* CONTADOR */
+const startDate = new Date(2023,5,12,0,0,0);
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const mins = Math.floor((diff / (1000 * 60)) % 60);
-        const secs = Math.floor((diff / 1000) % 60);
+function updateCounter(){
 
-        document.getElementById('d').innerText = days;
-        document.getElementById('h').innerText = hours;
-        document.getElementById('m').innerText = mins;
-        document.getElementById('s').innerText = secs;
+    const now = new Date();
+    const diff = now - startDate;
+
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff / (1000*60*60)) % 24);
+    const mins = Math.floor((diff / (1000*60)) % 60);
+    const secs = Math.floor((diff / 1000) % 60);
+
+    document.getElementById('d').innerText = days;
+    document.getElementById('h').innerText = hours;
+    document.getElementById('m').innerText = mins;
+    document.getElementById('s').innerText = secs;
+}
+
+setInterval(updateCounter,1000);
+updateCounter();
+
+/* SLIDES */
+let current = 0;
+
+const slides = document.querySelectorAll('.slide');
+
+const texts = [
+"Nosso amor começou aqui ❤️",
+"Você mudou minha vida ✨",
+"Cada foto guarda um momento especial 📸",
+"Meu lugar favorito é ao seu lado 💖",
+"Você é meu destino ❤️",
+"Te amarei para sempre ♾️"
+];
+
+const textElement = document.getElementById('slide-text');
+
+function nextSlide(){
+
+    slides[current].classList.remove('active');
+
+    current = (current + 1) % slides.length;
+
+    slides[current].classList.add('active');
+
+    textElement.style.opacity = 0;
+
+    setTimeout(()=>{
+
+        textElement.innerText =
+        texts[current % texts.length];
+
+        textElement.style.opacity = 1;
+
+    },500);
+
+}
+
+setInterval(nextSlide,4500);
+
+/* MUSICA */
+const player = document.getElementById('player');
+
+function toggleMusic(){
+
+    if(player.paused){
+        player.play();
+    }else{
+        player.pause();
     }
-    setInterval(updateCounter, 1000);
-    updateCounter();
 
-    // 3. LÓGICA DOS SLIDES
-    let current = 0;
-    const slides = document.querySelectorAll('.slide');
-    const texts = [
-        "Tudo começou em 2023...",
-        "O melhor presente da vida",
-        "Cada momento com você...",
-        "É um sonho realizado",
-        "Phelipe & Vanessa ❤️"
-    ];
-    const textElement = document.getElementById('slide-text');
+}
 
-    function nextSlide() {
-        slides[current].classList.remove('active');
-        current = (current + 1) % slides.length;
-        slides[current].classList.add('active');
+document.addEventListener('click',()=>{
 
-        textElement.style.opacity = 0;
-        setTimeout(() => {
-            textElement.innerText = texts[current] || "Amo você";
-            textElement.style.opacity = 1;
-        }, 600);
-    }
-    setInterval(nextSlide, 4500);
-
-    // 4. MÚSICA E CORAÇÕES
-    const player = document.getElementById('player');
-    function toggleMusic() {
-        player.paused ? player.play() : player.pause();
+    if(player.paused){
+        player.play();
     }
 
-    function createHeart() {
-        const h = document.createElement('div');
-        h.className = 'heart';
-        h.innerHTML = '❤';
-        h.style.left = Math.random() * 100 + 'vw';
-        h.style.top = '-20px';
-        h.style.fontSize = Math.random() * 20 + 15 + 'px';
-        h.style.animationDuration = Math.random() * 3 + 3 + 's';
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 6000);
-    }
-    setInterval(createHeart, 350);
+},{once:true});
 
-    // Auto-play no primeiro clique
-    document.addEventListener('click', () => {
-        if(player.paused) player.play();
-    }, { once: true });
+/* CORAÇÕES CAINDO */
+function createHeart(){
+
+    const h = document.createElement('div');
+
+    h.className = 'heart';
+
+    h.innerHTML = '❤';
+
+    h.style.left = Math.random()*100 + 'vw';
+
+    h.style.top = '-20px';
+
+    h.style.fontSize = Math.random()*20 + 15 + 'px';
+
+    h.style.animationDuration =
+    Math.random()*3 + 3 + 's';
+
+    document.body.appendChild(h);
+
+    setTimeout(()=>{
+        h.remove();
+    },6000);
+
+}
+
+setInterval(createHeart,300);
+
+/* FRASES */
+const phrases = [
+
+"Você é o amor mais lindo que já aconteceu na minha vida ❤️",
+
+"Meu coração encontrou casa em você 🏡❤️",
+
+"Seu sorriso ilumina até os meus dias mais escuros ✨",
+
+"Com você, qualquer momento vira memória eterna 💞",
+
+"Te amar é a coisa mais fácil do mundo ❤️",
+
+"Você é meu sonho favorito realizado 💖",
+
+"Seu abraço é meu lugar seguro 🤍",
+
+"Cada segundo contigo vale uma eternidade ✨",
+
+"Você é minha paz em meio ao caos ❤️",
+
+"Minha vida ficou mais bonita depois de você 🌹",
+
+"Você é o melhor capítulo da minha história 📖❤️",
+
+"Seu amor mudou tudo em mim 💘",
+
+"Prometo te amar em todos os detalhes 💍",
+
+"Você é meu hoje e todos os meus amanhãs ❤️",
+
+"Quando estou com você, o mundo fica perfeito ✨",
+
+"Eu escolheria você em todas as vidas 💞",
+
+"Você é meu coração fora do peito ❤️",
+
+"Seu olhar é meu lugar favorito 🌙",
+
+"Nosso amor é minha maior sorte 🍀❤️",
+
+"Você é a razão dos meus melhores sorrisos 😊❤️"
+
+];
+
+function showPhrase(){
+
+    const phrase =
+    phrases[Math.floor(Math.random()*phrases.length)];
+
+    const el = document.getElementById('phrase');
+
+    el.style.opacity = 0;
+
+    setTimeout(()=>{
+
+        el.innerText = phrase;
+
+        el.style.opacity = 1;
+
+    },300);
+
+}
+
+/* ESTRELAS */
+const starsContainer = document.querySelector('.stars');
+
+for(let i=0;i<120;i++){
+
+    const star = document.createElement('div');
+
+    star.className = 'star';
+
+    star.style.left = Math.random()*100 + '%';
+
+    star.style.top = Math.random()*100 + '%';
+
+    star.style.animationDelay =
+    Math.random()*4 + 's';
+
+    starsContainer.appendChild(star);
+
+}
+
 </script>
 
 </body>
